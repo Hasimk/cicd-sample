@@ -85,8 +85,8 @@ steps:
     args:
     - -c
     - |
-      cp -r /dags/dags/*  /workspace/olddags
-      ls /workspace
+      cp -r /dags/dags/*  /workspace/docdags
+      ls /workspace/docdags
   #- name: 'gcr.io/cloud-builders/gcloud'
   # entrypoint: /bin/bash
   #  entrypoint: 'bash'
