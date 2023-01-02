@@ -79,13 +79,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['save', '-o', 'image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
+    args: ['save', '-o', '/image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args:
     - -c
     - |
-      tar xvf image.tar .
+      tar xvf /image.tar .
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/DAGS/*', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags']
   
