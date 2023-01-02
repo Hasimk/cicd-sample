@@ -78,6 +78,7 @@ steps:
 # Push the image to GCR
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+    
   - name: 'gcr.io/cloud-builders/docker'
     args: ['save', '-o', './docdags/image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -88,7 +89,8 @@ steps:
       tar xvf ./docdags/image.tar -C ./docdags/
       ls ./docdags/
   - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+#     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+    args: ['cp', './dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
   
 availableSecrets:
     secretManager:
