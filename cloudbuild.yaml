@@ -85,8 +85,8 @@ steps:
     args:
     - '-c'
     - |
-      ls
       tar xvf ./image.tar
+      ls
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', './dags/*', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
   
