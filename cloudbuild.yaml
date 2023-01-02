@@ -85,10 +85,10 @@ steps:
     args:
     - '-c'
     - |
-      tar xvf ./docdags/image.tar
+      tar xvf ./docdags/image.tar -C ./docdags/
       ls
   - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', './docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+    args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
   
 availableSecrets:
     secretManager:
