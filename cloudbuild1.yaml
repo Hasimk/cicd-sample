@@ -1,22 +1,99 @@
----
+# - Airflow Env variables.
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
+  
+# Access the id_github file from Secret Manager, and setup SSH
 steps:
-  - name: gcr.io/cloud-builders/docker
+  - name: 'gcr.io/cloud-builders/git'
+    secretEnv: ['SSH_KEY']
+    entrypoint: 'bash'
     args:
-      - pull
-      - $_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/hasim-airflow/quickstart-image:tag6
-  - name: gcr.io/cloud-builders/docker
+    - -c
+    - |
+      echo "$$SSH_KEY" >> /root/.ssh/id_rsa
+      chmod 400 /root/.ssh/id_rsa
+      ssh-keyscan -t rsa github.com > known_hosts.github
+      cp known_hosts.github /root/.ssh/known_hosts
+# cat known_hosts.github 
+    volumes:
+    - name: 'ssh'
+      path: /root/.ssh
+  
+# Clone the repository
+  - name: 'gcr.io/cloud-builders/git'
     args:
-      - push
-      - $_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/hasim-airflow/quickstart-image:tag6
-    env:
-      - CLOUDSDK_COMPOSER_MANAGED_VMs=true
+    - clone
+    - --recurse-submodules
+    - git@github.com:Hasimk/cicd-sample.git
+    volumes:
+    - name: 'ssh'
+      path: /root/.ssh
+
+  
+# # # [START composer_cicd_dagsync_yaml]
+
+# # install dependencies
+#  - name: python
+#    entrypoint: pip
+#    args: ["install", "-r", "requirements.txt", "--user"]
+
+# # run
+# - name: python
+#    entrypoint: python
+#    args: ["utils/add_dags_to_composer.py", "--dags_directory=${_DAGS_DIRECTORY}", "--dags_bucket=${_DAGS_BUCKET}"]
+
+# [END composer_cicd_dagsync_yaml]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      for dagfile in $(ls dags)
+        do
+        gcloud composer environments storage dags import \
+        --environment $_COMPOSER_ENV_NAME \
+        --location $_COMPOSER_REGION \
+        --source dags/$$dagfile
+        done
+# # [Start Artifact registry]
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: [ 'build', '-t', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6', '.' ]
+  
+#   # - name: 'gcr.io/cloud-builders/docker'
+#     # args: ['push', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6']
+  
+#   # - name: 'gcr.io/cloud-builders/gcloud'
+#     # args: ['run', 'deploy', 'quickstart-image', '--image', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6' , --port=8080 , '--region', '$_COMPOSER_REGION', --memory=1G, '--platform', 'managed', '--allow-unauthenticated']  
+  
+# images:
+#   - '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6' 
+  
+#  ## [End Artifact registry]
+
+# Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
+    
+# Push the image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+    
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['save', '-o', './docdags/image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      tar xvf ./docdags/image.tar -C ./docdags/
+      ls ./docdags/
+  - name: 'gcr.io/cloud-builders/gsutil'
+#     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+    args: ['cp', './dags/*.py', 'gs://hasim']
+  
+availableSecrets:
+    secretManager:
+    - versionName: projects/591981386330/secrets/SSH_KEY/versions/latest
+      env: 'SSH_KEY'
       
-  - name: gcr.io/cloud-builders/gcloud
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        gcloud composer environments update  hasim-airflow --location=asia-south1  --image-version=quickstart-image:tag6
