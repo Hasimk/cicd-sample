@@ -30,47 +30,6 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  
-# # # [START composer_cicd_dagsync_yaml]
-
-# # install dependencies
-#  - name: python
-#    entrypoint: pip
-#    args: ["install", "-r", "requirements.txt", "--user"]
-
-# # run
-# - name: python
-#    entrypoint: python
-#    args: ["utils/add_dags_to_composer.py", "--dags_directory=${_DAGS_DIRECTORY}", "--dags_bucket=${_DAGS_BUCKET}"]
-
-# [END composer_cicd_dagsync_yaml]
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-    - '-c'
-    - |
-      for dagfile in $(ls dags)
-        do
-        gcloud composer environments storage dags import \
-        --environment $_COMPOSER_ENV_NAME \
-        --location $_COMPOSER_REGION \
-        --source dags/$$dagfile
-        done
-# # [Start Artifact registry]
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: [ 'build', '-t', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6', '.' ]
-  
-#   # - name: 'gcr.io/cloud-builders/docker'
-#     # args: ['push', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6']
-  
-#   # - name: 'gcr.io/cloud-builders/gcloud'
-#     # args: ['run', 'deploy', 'quickstart-image', '--image', '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6' , --port=8080 , '--region', '$_COMPOSER_REGION', --memory=1G, '--platform', 'managed', '--allow-unauthenticated']  
-  
-# images:
-#   - '$_COMPOSER_REGION-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag6' 
-  
-#  ## [End Artifact registry]
-
 # Build the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
@@ -85,21 +44,13 @@ steps:
     args:
     - -c
     - |
-      cp -r /dags/dags/*  /workspace/docdags
+      cp -rv /dags/dags/*  /workspace/docdags
       ls /workspace/docdags
-  #- name: 'gcr.io/cloud-builders/gcloud'
-  # entrypoint: /bin/bash
-  #  entrypoint: 'bash'
-  #  args:
-  #  - '-c'
-  #  - |
-  #    tar xvf ./docdags/image.tar -C ./docdags/
-  #    ls ./docdags/
      
 # Independant command testing purpose 
   - name: 'gcr.io/cloud-builders/gsutil'
 #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-    args: ['cp', './dags/*.py', 'gs://hasim']
+    args: ['cp', '/workspace/docdags/*.py', 'gs://hasim']
   
 availableSecrets:
     secretManager:
