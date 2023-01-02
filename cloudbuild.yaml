@@ -90,7 +90,7 @@ steps:
       ls ./docdags/
   - name: 'gcr.io/cloud-builders/gsutil'
 #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-    args: ['cp', './dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+    args: ['cp', './dags/*.py', 'gs://hasim']
   
 availableSecrets:
     secretManager:
