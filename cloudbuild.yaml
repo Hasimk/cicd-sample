@@ -83,7 +83,10 @@ steps:
     args: ['save', 'gcr.io/fg-dev-host/my-image:v1.0', '-o', '/image.tar']
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
-    args: ['tar', '-xf', '/image.tar', '-C', '/']
+    args:
+    - -c
+    - |
+      tar zxvf /image.tar .
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/DAGS/*', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags']
   
