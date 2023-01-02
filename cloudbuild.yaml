@@ -78,10 +78,8 @@ steps:
 # Push the image to GCR
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
-    
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['save', '-o', './docdags/image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
   
+  # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image:v1.0
     entrypoint: /bin/bash
     args:
@@ -89,16 +87,16 @@ steps:
     - |
       cp -r /dags/dags/*  /workspace/olddags
       ls /workspace
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: /bin/bash
-    entrypoint: 'bash'
-    args:
-    - '-c'
-    - |
-      tar xvf ./docdags/image.tar -C ./docdags/
-      ls ./docdags/
-      
-     # Independant command testing purpose 
+  #- name: 'gcr.io/cloud-builders/gcloud'
+  # entrypoint: /bin/bash
+  #  entrypoint: 'bash'
+  #  args:
+  #  - '-c'
+  #  - |
+  #    tar xvf ./docdags/image.tar -C ./docdags/
+  #    ls ./docdags/
+     
+# Independant command testing purpose 
   - name: 'gcr.io/cloud-builders/gsutil'
 #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
     args: ['cp', './dags/*.py', 'gs://hasim']
