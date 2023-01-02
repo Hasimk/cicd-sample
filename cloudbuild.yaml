@@ -80,7 +80,7 @@ steps:
     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['save', '-o', 'image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args:
     - -c
