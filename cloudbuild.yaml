@@ -77,16 +77,15 @@ steps:
     
 # Push the image to GCR
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
-    
+    args: ['save', 'gcr.io/fg-dev-host/my-image:v1.0', 'image.tar']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['save', 'gcr.io/fg-dev-host/my-image:v1.0', '|', 'gzip', '>', 'image.tar.gz']
-  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+- name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
     - -c
     - |
-      tar zxvf image.tar.gz .
+      tar xvf image.tar.gz .
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/DAGS/*', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags']
   
