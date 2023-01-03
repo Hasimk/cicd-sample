@@ -19,7 +19,7 @@ default_args = {
     # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
-    # 'end_date': datetime(2016, 1, 1),
+    ## 'end_date': datetime(2016, 1, 1),
 }
 
 dag = DAG("tutorial", default_args=default_args, schedule_interval=timedelta(1))
