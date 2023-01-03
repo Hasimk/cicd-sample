@@ -2,38 +2,37 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
+  ROLLBACK: 'false'
+ 
   
 # Access the id_github file from Secret Manager, and setup SSH
-steps:
-  - name: 'gcr.io/cloud-builders/git'
-    secretEnv: ['SSH_KEY']
-    entrypoint: 'bash'
-    args:
-    - -c
-    - |
-      echo "$$SSH_KEY" >> /root/.ssh/id_rsa
-      chmod 400 /root/.ssh/id_rsa
-      ssh-keyscan -t rsa github.com > known_hosts.github
-      cp known_hosts.github /root/.ssh/known_hosts
-# cat known_hosts.github 
-    volumes:
-    - name: 'ssh'
-      path: /root/.ssh
+# steps:
+#   - name: 'gcr.io/cloud-builders/git'
+#     secretEnv: ['SSH_KEY']
+#     entrypoint: 'bash'
+#     args:
+#     - -c
+#     - |
+#       echo "$$SSH_KEY" >> /root/.ssh/id_rsa
+#       chmod 400 /root/.ssh/id_rsa
+#       ssh-keyscan -t rsa github.com > known_hosts.github
+#       cp known_hosts.github /root/.ssh/known_hosts
+# # cat known_hosts.github 
+#     volumes:
+#     - name: 'ssh'
+#       path: /root/.ssh
   
-# Clone the repository
-  - name: 'gcr.io/cloud-builders/git'
-    args:
-    - clone
+# # Clone the repository
+#   - name: 'gcr.io/cloud-builders/git'
+#     args:
+#     - clone
 #     - --recurse-submodules
-    - git@github.com:Hasimk/cicd-sample.git
-    volumes:
-    - name: 'ssh'
-      path: /root/.ssh
-
-  
-# # # [START composer_cicd_dagsync_yaml]
-
-
+#     - git@github.com:Hasimk/cicd-sample.git
+#     volumes:
+#     - name: 'ssh'
+#       path: /root/.ssh
+      
+ # [ composer_cicd_dagsync_yaml]
 #   - name: 'gcr.io/cloud-builders/gcloud'
 #     entrypoint: 'bash'
 #     args:
@@ -47,30 +46,49 @@ steps:
 #         --source dags/$$dagfile
 #         done
 
+# # # Build the image
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
+    
+# # # Push the image to GCR
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['push', 'gcr.io/fg-dev-host/my-image6:v1.7']
 
-# Build the image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
-    
-# Push the image to GCR
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
-    
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['save', '-o', 'docdags/image.tar', 'gcr.io/fg-dev-host/my-image:v1.0']
-  - name: 'gcr.io/cloud-builders/gcloud'
+# # vulnerabiliy scan
+
+#   - name: 'gcr.io/cloud-builders/gcloud'
+
+#     args: ['beta', 'container', 'images', 'describe', 'gcr.io/fg-dev-host/my-image6:v1.7'', '--format=json']
+
+# Removing the old build Dags object
+  - name: 'gcr.io/cloud-builders/gsutil'
     entrypoint: 'bash'
     args:
-    - '-c'
-    - |
-      tar xvf docdags/image.tar 
-      ls docdags/
-#   - name: 'gcr.io/cloud-builders/gsutil'
-#     args: ['cp', 'docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
-#     args: ['cp', 'dags/*.py', 'gs://hasim']
+      - '-c'
+      - |
+        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
-availableSecrets:
-    secretManager:
-    - versionName: projects/591981386330/secrets/SSH_KEY/versions/latest
-      env: 'SSH_KEY'
+  # No need to save in tar if it can be run like below
+  - name: gcr.io/fg-dev-host/my-image6:v1.7
+    entrypoint: /bin/bash
+    args:
+      - -c
+      - |
+        cp -rv /dags/dags/*  /workspace/docdags/
+        ls /workspace/docdags
+    conditions:
+         - env: 'ROLLBACK'
+      
+
+     
+# # Independant command testing purpose 
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+    
+   
+  
+# availableSecrets:
+#     secretManager:
+#     - versionName: projects/591981386330/secrets/SSH_KEY/versions/latest
+#       env: 'SSH_KEY'
       
