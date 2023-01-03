@@ -1,30 +1,37 @@
 # - Airflow Env variables.
 substitutions:
-  ROLLBACK: 'false'
+  _ROLLBACK: 'false'
  
    
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
-
+ 
 # Removing the old build Dags object
-  - name: 'gcr.io/cloud-builders/gsutil'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+ - name: 'gcr.io/cloud-builders/gsutil'
+   entrypoint: 'bash'
+   args:
+   - '-c'
+   - |
+     gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image6:v1.7
-    entrypoint: /bin/bash
-    args:
-      - -c
-      - |
+ - name: gcr.io/fg-dev-host/my-image6:v1.7
+   entrypoint: /bin/bash
+   args:
+    - -c
+    - |
+      if [ "$_ROLLBACK" != "true" ]
+      then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-waitFor:
-  - env: 'ROLLBACK'         
+      fi
+      
+         
      
 # # Independant command testing purpose 
-#   - name: 'gcr.io/cloud-builders/gsutil'
-#     args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+ - name: 'gcr.io/cloud-builders/gsutil'
+   args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+    
+   
+  
+      
