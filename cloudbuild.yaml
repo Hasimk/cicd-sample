@@ -29,6 +29,20 @@ steps:
     volumes:
     - name: 'ssh'
       path: /root/.ssh
+      
+ # [ composer_cicd_dagsync_yaml]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      for dagfile in $(ls dags)
+        do
+        gcloud composer environments storage dags import \
+        --environment $_COMPOSER_ENV_NAME \
+        --location $_COMPOSER_REGION \
+        --source dags/$$dagfile
+        done
 
 # Build the image
   - name: 'gcr.io/cloud-builders/docker'
