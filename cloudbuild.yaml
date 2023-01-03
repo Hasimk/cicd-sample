@@ -58,7 +58,7 @@ steps:
     args:
     - -c
     - |
-      cp -rv /dags/dags/*  /workspace/
+      cp -rv /dags/*  /workspace/
       ls /workspace/
      
 # Independant command testing purpose 
