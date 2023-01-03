@@ -21,14 +21,14 @@ steps:
       path: /root/.ssh
   
 # Clone the repository
-  - name: 'gcr.io/cloud-builders/git'
-    args:
-    - clone
-    - --recurse-submodules
-    - git@github.com:Hasimk/cicd-sample.git
-    volumes:
-    - name: 'ssh'
-      path: /root/.ssh
+#   - name: 'gcr.io/cloud-builders/git'
+#     args:
+#     - clone
+#     - --recurse-submodules
+#     - git@github.com:Hasimk/cicd-sample.git
+#     volumes:
+#     - name: 'ssh'
+#       path: /root/.ssh
       
  # [ composer_cicd_dagsync_yaml]
 #   - name: 'gcr.io/cloud-builders/gcloud'
