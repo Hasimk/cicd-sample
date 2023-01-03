@@ -28,8 +28,8 @@ steps:
 
      
 # # Independant command testing purpose 
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+#   - name: 'gcr.io/cloud-builders/gsutil'
+#     args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
     
    
   
