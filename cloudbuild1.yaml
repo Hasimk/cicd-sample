@@ -1,51 +1,3 @@
-# - Airflow Env variables.
-substitutions:
-#   _COMPOSER_REGION: asia-south1
-#   _COMPOSER_ENV_NAME: arflow-hasim
-#   ROLLBACK: 'false'
- 
-  
-# Access the id_github file from Secret Manager, and setup SSH
-# steps:
-#   - name: 'gcr.io/cloud-builders/git'
-#     secretEnv: ['SSH_KEY']
-#     entrypoint: 'bash'
-#     args:
-#     - -c
-#     - |
-#       echo "$$SSH_KEY" >> /root/.ssh/id_rsa
-#       chmod 400 /root/.ssh/id_rsa
-#       ssh-keyscan -t rsa github.com > known_hosts.github
-#       cp known_hosts.github /root/.ssh/known_hosts
-# # cat known_hosts.github 
-#     volumes:
-#     - name: 'ssh'
-#       path: /root/.ssh
-  
-# # Clone the repository
-#   - name: 'gcr.io/cloud-builders/git'
-#     args:
-#     - clone
-#     - --recurse-submodules
-#     - git@github.com:Hasimk/cicd-sample.git
-#     volumes:
-#     - name: 'ssh'
-#       path: /root/.ssh
-      
- # [ composer_cicd_dagsync_yaml]
-#   - name: 'gcr.io/cloud-builders/gcloud'
-#     entrypoint: 'bash'
-#     args:
-#     - '-c'
-#     - |
-#       for dagfile in $(ls dags)
-#         do
-#         gcloud composer environments storage dags import \
-#         --environment $_COMPOSER_ENV_NAME \
-#         --location $_COMPOSER_REGION \
-#         --source dags/$$dagfile
-#         done
-
 # # # Build the image
 #   - name: 'gcr.io/cloud-builders/docker'
 #     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
@@ -76,9 +28,7 @@ substitutions:
       - |
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-#     conditions:
-#          - env: 'ROLLBACK'
-      
+         
 
      
 # # Independant command testing purpose 
@@ -87,8 +37,4 @@ substitutions:
     
    
   
-# availableSecrets:
-#     secretManager:
-#     - versionName: projects/591981386330/secrets/SSH_KEY/versions/latest
-#       env: 'SSH_KEY'
       
