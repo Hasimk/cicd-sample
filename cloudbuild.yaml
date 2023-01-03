@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: false
+  ROLLBACK: 'false'
  
   
 # Access the id_github file from Secret Manager, and setup SSH
@@ -77,7 +77,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
     conditions:
-    env: $_ROLLBACK \
+     - env: 'ROLLBACK'
 
   
 availableSecrets:
