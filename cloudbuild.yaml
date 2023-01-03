@@ -69,13 +69,19 @@ steps:
       cp -rv /dags/dags/*  /workspace/docdags/
 #       ls /workspace/
       
-      for dagfile in $(ls /workspace/dags)
+      #Add dags to Dags folder
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - '-c'
+      - |
+        for dagfile in $(ls /workspace/dags)
           do
           gcloud composer environments storage dags import \
           --environment $_COMPOSER_ENV_NAME \
           --location $_COMPOSER_REGION \
           --source /workspace/dags/$$dagfile
           done
+    entrypoint: bash
      
 # # Independant command testing purpose 
 #   - name: 'gcr.io/cloud-builders/gsutil'
