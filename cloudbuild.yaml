@@ -72,7 +72,7 @@ steps:
 # Independant command testing purpose 
   - name: 'gcr.io/cloud-builders/gsutil'
 #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-    args: ['cp', '/workspace/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+    args: ['cp', '/workspace/dags/*.py', 'gs://hasim']
   
 availableSecrets:
     secretManager:
