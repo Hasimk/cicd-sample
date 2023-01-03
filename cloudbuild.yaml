@@ -44,16 +44,16 @@ steps:
 #         --source dags/$$dagfile
 #         done
 
-# Build the image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
+# # Build the image
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
     
-# Push the image to GCR
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+# # Push the image to GCR
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
   
   # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image:v1.0
+  - name: gcr.io/fg-dev-host/my-image@sha256:214f30d31a1c62ed4670b6732c9dde825747f320c9fab19feea8300ece158b79
     entrypoint: /bin/bash
     args:
     - -c
