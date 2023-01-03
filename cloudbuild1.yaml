@@ -1,9 +1,7 @@
 # - Airflow Env variables.
 substitutions:
-  _COMPOSER_REGION: asia-south1
-  _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK='false'
-  
+  ROLLBACK: 'false'
+ 
    
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
@@ -25,7 +23,7 @@ steps:
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
     conditions:
-      - env: _ROLLBACK
+      - env: 'ROLLBACK'
          
 
      
