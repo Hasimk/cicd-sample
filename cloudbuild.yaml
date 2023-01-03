@@ -44,13 +44,13 @@ steps:
     args:
     - -c
     - |
-      cp -rv /dags/dags/*  /workspace/docdags
-      ls /workspace/docdags
+      cp -rv /dags/dags/*  /workspace/
+      ls /workspace/
      
 # Independant command testing purpose 
   - name: 'gcr.io/cloud-builders/gsutil'
 #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-    args: ['cp', '/workspace/docdags/*.py', 'gs://hasim']
+    args: ['cp', '/workspace/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
   
 availableSecrets:
     secretManager:
