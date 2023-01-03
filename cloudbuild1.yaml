@@ -1,6 +1,6 @@
 # - Airflow Env variables.
 substitutions:
-  ROLLBACK: 'false'
+  _ROLLBACK: 'false'
  
    
 # Access the id_github file from Secret Manager, and setup SSH
@@ -20,7 +20,7 @@ steps:
     args:
     - -c
     - |
-      if [ "$ROLLBACK" != "true" ]
+      if [ "$_ROLLBACK" != "true" ]
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
