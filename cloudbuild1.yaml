@@ -15,9 +15,9 @@ steps:
      gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image6:v1.7
-    entrypoint: /bin/bash
-    args:
+ - name: gcr.io/fg-dev-host/my-image6:v1.7
+   entrypoint: /bin/bash
+   args:
     - -c
     - |
       if [ "$_ROLLBACK" != "true" ]
@@ -30,8 +30,8 @@ steps:
 
      
 # # Independant command testing purpose 
-  - name: 'gcr.io/cloud-builders/gsutil'
-    args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+ - name: 'gcr.io/cloud-builders/gsutil'
+   args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
     
    
   
