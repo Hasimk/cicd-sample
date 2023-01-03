@@ -51,6 +51,14 @@ steps:
 # # Push the image to GCR
 #   - name: 'gcr.io/cloud-builders/docker'
 #     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+
+# Removing the old build Dags object
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image@sha256:214f30d31a1c62ed4670b6732c9dde825747f320c9fab19feea8300ece158b79
