@@ -10,19 +10,19 @@ steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+    - '-c'
+    - |
+      gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
     env: 'ROLLBACK'
     args:
-      - -c
-      - |
-        cp -rv /dags/dags/*  /workspace/docdags/
-        ls /workspace/docdags
+    - -c
+    - |
+      cp -rv /dags/dags/*  /workspace/docdags/
+      ls /workspace/docdags
     # conditions:
       
          
