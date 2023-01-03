@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-#   ROLLBACK: 'false'
+  _ROLLBACK: 'false'
  
   
 # Access the id_github file from Secret Manager, and setup SSH
@@ -66,6 +66,8 @@ steps:
   - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
     args:
+    conditions:
+    - env: 'ROLLBACK'
     - -c
     - |
       cp -rv /dags/dags/*  /workspace/docdags/
