@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  ROLLBACK: 'false'
+  
  
   
 # Access the id_github file from Secret Manager, and setup SSH
@@ -76,9 +76,7 @@ steps:
       - |
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-    conditions:
-         - env: 'ROLLBACK'
-      
+         
 
      
 # # Independant command testing purpose 
