@@ -67,26 +67,25 @@ steps:
     - -c
     - |
       cp -rv /dags/dags/*  /workspace/docdags/
-#       ls /workspace/
+      ls /workspace/docdags
       
-      #Add dags to Dags folder
-  - name: gcr.io/cloud-builders/gcloud
-    args:
-      - '-c'
-      - |
-        for dagfile in $(ls /workspace/docdags)
-          do
-          gcloud composer environments storage dags import \
-          --environment $_COMPOSER_ENV_NAME \
-          --location $_COMPOSER_REGION \
-          --source /workspace/docdags/$$dagfile
-          done
-    entrypoint: bash
+#       #Add dags to Dags folder
+#   - name: gcr.io/cloud-builders/gcloud
+#     args:
+#       - '-c'
+#       - |
+#         for dagfile in $(ls /workspace/docdags)
+#           do
+#           gcloud composer environments storage dags import \
+#           --environment $_COMPOSER_ENV_NAME \
+#           --location $_COMPOSER_REGION \
+#           --source /workspace/docdags/$$dagfile
+#           done
+#     entrypoint: bash
      
 # # Independant command testing purpose 
-#   - name: 'gcr.io/cloud-builders/gsutil'
-# #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-#     args: ['cp', '/workspace/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
 
   
 availableSecrets:
