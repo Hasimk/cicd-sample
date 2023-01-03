@@ -1,3 +1,13 @@
+# - Airflow Env variables.
+substitutions:
+  _COMPOSER_REGION: asia-south1
+  _COMPOSER_ENV_NAME: arflow-hasim
+  
+ 
+  
+# Access the id_github file from Secret Manager, and setup SSH
+steps:
+  
 # # # Build the image
 #   - name: 'gcr.io/cloud-builders/docker'
 #     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
