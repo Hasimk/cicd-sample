@@ -20,11 +20,11 @@ steps:
     args:
     - -c
     - |
-      cp -rv /dags/dags/*  /workspace/docdags/
-      ls /workspace/docdags
-
-    conditions:
-      - env: 'ROLLBACK'
+      if [ "$ROLLBACK" != "true" ]
+      then
+        cp -rv /dags/dags/*  /workspace/docdags/
+        ls /workspace/docdags
+      fi
       
          
 
