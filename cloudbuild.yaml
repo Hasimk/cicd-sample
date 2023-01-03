@@ -66,6 +66,7 @@ steps:
   - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
     args:
+    - env: 'ROLLBACK'
     - -c
     - |
       cp -rv /dags/dags/*  /workspace/docdags/
@@ -77,7 +78,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
     conditions:
-  - env: 'ROLLBACK'
+
 
   
 availableSecrets:
