@@ -67,7 +67,7 @@ steps:
     entrypoint: /bin/bash
     args:
     conditions:
-    - env: $_ROLLBACK
+    - -env: $_ROLLBACK
     - -c
     - |
       cp -rv /dags/dags/*  /workspace/docdags/
