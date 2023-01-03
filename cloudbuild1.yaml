@@ -23,7 +23,7 @@ steps:
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
     conditions:
-       env: 'ROLLBACK'
+      env: 'ROLLBACK'
          
 
      
