@@ -21,14 +21,14 @@ steps:
       path: /root/.ssh
   
 # Clone the repository
-#   - name: 'gcr.io/cloud-builders/git'
-#     args:
-#     - clone
-#     - --recurse-submodules
-#     - git@github.com:Hasimk/cicd-sample.git
-#     volumes:
-#     - name: 'ssh'
-#       path: /root/.ssh
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+    - clone
+    - --recurse-submodules
+    - git@github.com:Hasimk/cicd-sample.git
+    volumes:
+    - name: 'ssh'
+      path: /root/.ssh
       
  # [ composer_cicd_dagsync_yaml]
 #   - name: 'gcr.io/cloud-builders/gcloud'
@@ -44,13 +44,13 @@ steps:
 #         --source dags/$$dagfile
 #         done
 
-# # Build the image
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
+# Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image1:v1.0', '.']
     
-# # Push the image to GCR
-#   - name: 'gcr.io/cloud-builders/docker'
-#     args: ['push', 'gcr.io/fg-dev-host/my-image:v1.0']
+# Push the image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/fg-dev-host/my-image1:v1.0']
 
 # Removing the old build Dags object
   - name: 'gcr.io/cloud-builders/gsutil'
