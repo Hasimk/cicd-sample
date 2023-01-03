@@ -2,6 +2,8 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
+   ROLLBACK: 'false'
+ 
   
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
@@ -61,7 +63,7 @@ steps:
         gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image6:v1.0
+  - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
     args:
     - -c
@@ -74,6 +76,8 @@ steps:
 # # Independant command testing purpose 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+    conditions:
+    - env: 'ROLLBACK'
 
   
 availableSecrets:
