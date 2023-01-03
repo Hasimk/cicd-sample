@@ -67,12 +67,21 @@ steps:
     - -c
     - |
       cp -rv /dags/dags/*  /workspace/docdags/
-      ls /workspace/
+#       ls /workspace/
+      
+      for dagfile in $(ls /workspace/dags)
+          do
+          gcloud composer environments storage dags import \
+          --environment $_COMPOSER_ENV_NAME \
+          --location $_COMPOSER_REGION \
+          --source /workspace/dags/$$dagfile
+          done
      
-# Independant command testing purpose 
-  - name: 'gcr.io/cloud-builders/gsutil'
-#     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
-    args: ['cp', '/workspace/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+# # Independant command testing purpose 
+#   - name: 'gcr.io/cloud-builders/gsutil'
+# #     args: ['cp', './docdags/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/data/']
+#     args: ['cp', '/workspace/dags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+
   
 availableSecrets:
     secretManager:
