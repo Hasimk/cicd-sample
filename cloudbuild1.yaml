@@ -7,12 +7,12 @@ substitutions:
 steps:
  
 # Removing the old build Dags object
-  - name: 'gcr.io/cloud-builders/gsutil'
-    entrypoint: 'bash'
-    args:
-    - '-c'
-    - |
-      gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+ # - name: 'gcr.io/cloud-builders/gsutil'
+ #   entrypoint: 'bash'
+ #   args:
+ #   - '-c'
+ #   - |
+ #     gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image1:v1.0
