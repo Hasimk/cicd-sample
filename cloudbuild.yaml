@@ -72,12 +72,12 @@ steps:
   - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
     args:
-    conditions:
-    - -env: $_ROLLBACK
-    - -c
-    - |
-      cp -rv /dags/dags/*  /workspace/docdags/
-      ls /workspace/docdags
+      - -c
+      - |
+        cp -rv /dags/dags/*  /workspace/docdags/
+        ls /workspace/docdags
+conditions:
+  - env: _ROLLBACK
       
 
      
