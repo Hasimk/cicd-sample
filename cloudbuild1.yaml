@@ -5,7 +5,7 @@ substitutions:
    
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
- 
+
 # Removing the old build Dags object
   - name: 'gcr.io/cloud-builders/gsutil'
     entrypoint: 'bash'
@@ -22,10 +22,8 @@ steps:
       - |
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-conditions:
-  - env: 'ROLLBACK'
-         
-
+waitFor:
+  - env: 'ROLLBACK'         
      
 # # Independant command testing purpose 
 #   - name: 'gcr.io/cloud-builders/gsutil'
