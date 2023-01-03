@@ -61,7 +61,7 @@ steps:
         gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image6:v1.7
+  - name: gcr.io/fg-dev-host/my-image6:v1.0
     entrypoint: /bin/bash
     args:
     - -c
