@@ -52,13 +52,13 @@ steps:
 #   - name: 'gcr.io/cloud-builders/docker'
 #     args: ['push', 'gcr.io/fg-dev-host/my-image6:v1.0']
 
-# # Removing the old build Dags object
-#   - name: 'gcr.io/cloud-builders/gsutil'
-#     entrypoint: 'bash'
-#     args:
-#       - '-c'
-#       - |
-#         gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+# Removing the old build Dags object
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image1:v1.0
@@ -66,7 +66,7 @@ steps:
     args:
     - -c
     - |
-      cp -rv /dags/dags/*  /workspace/
+      cp -rv /dags/dags/*  /workspace/docdags/
       ls /workspace/
      
 # Independant command testing purpose 
