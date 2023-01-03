@@ -1,7 +1,7 @@
 # - Airflow Env variables.
 substitutions:
-#   _COMPOSER_REGION: asia-south1
-#   _COMPOSER_ENV_NAME: arflow-hasim
+  _COMPOSER_REGION: asia-south1
+  _COMPOSER_ENV_NAME: arflow-hasim
 #   ROLLBACK: 'false'
  
   
@@ -65,14 +65,11 @@ steps:
   # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image6:v1.7
     entrypoint: /bin/bash
-    args: ['cp', '-rv', '/dags/dags/*',  '/workspace/docdags/']
-#     conditions:
-#     - env: 'ROLLBACK'
-   
-#     - -c
-#     - |
-#       cp -rv /dags/dags/*  /workspace/docdags/
-# #       ls /workspace/docdags
+    args:
+    - -c
+    - |
+      cp -rv /dags/dags/*  /workspace/docdags/
+      ls /workspace/docdags
       
 
      
