@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'false'
+  _ROLLBACK: 'true'
  
    
 # Access the id_github file from Secret Manager, and setup SSH
@@ -49,7 +49,7 @@ steps:
           --location $_COMPOSER_REGION \
           --source dags/$$dagfile
           done
-     echo "ROLLBACK REQUIRED AGFAIN"
-     fi
+      echo "PUSH ELSE CONDITION HERE"
+    fi
   
       
