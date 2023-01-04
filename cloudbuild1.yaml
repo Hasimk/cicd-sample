@@ -51,5 +51,5 @@ steps:
      fi
      if [ "_ROLLBACK" != "false" ]
      then
-      gcloud composer environments storage data import myenv --source=/workspace/docdags/
+      gcloud composer environments storage data import $_COMPOSER_ENV_NAME --source=/workspace/docdags/
      fi
