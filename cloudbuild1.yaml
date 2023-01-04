@@ -8,11 +8,11 @@ substitutions:
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
 # Build the image
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.5', '.']
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.5', '.']
 # Push the image to GCR
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/fg-dev-host/my-image:v1.5']
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['push', 'gcr.io/fg-dev-host/my-image:v1.5']
 # Removing the old build Dags object
 # - name: 'gcr.io/cloud-builders/gsutil'
 #   entrypoint: 'bash'
@@ -22,16 +22,16 @@ steps:
 #     gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
   # No need to save in tar if it can be run like below
- - name: gcr.io/fg-dev-host/my-image6:v1.7
-   entrypoint: /bin/bash
-   args:
-    - -c
-    - |
-      if [ "$_ROLLBACK" != "false" ]
-      then
-        cp -rv /dags/dags/*  /workspace/docdags/
-        ls /workspace/docdags
-      fi
+# - name: gcr.io/fg-dev-host/my-image6:v1.7
+#   entrypoint: /bin/bash
+#   args:
+#    - -c
+#    - |
+#      if [ "$_ROLLBACK" != "false" ]
+#      then
+#        cp -rv /dags/dags/*  /workspace/docdags/
+#        ls /workspace/docdags
+#      fi
       
              
  - name: 'gcr.io/cloud-builders/gcloud'
