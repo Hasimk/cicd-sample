@@ -39,7 +39,7 @@ steps:
    args:
    - '-c'
    - |
-     if [ "_ROLLBACK" != "true" ]
+     if [ "_ROLLBACK" != "false" ]
      then
       echo "ROLLBACK NOT REQUIRED"
       #for dagfile in $(ls dags)
