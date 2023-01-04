@@ -49,4 +49,5 @@ steps:
       #    --location $_COMPOSER_REGION \
       #    --source dags/$$dagfile
       #    done
+     fi
      gcloud composer environments storage data import --environment=$_COMPOSER_ENV_NAME --location=$_COMPOSER_REGION --source=/workspace/docdags/
