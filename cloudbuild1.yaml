@@ -48,9 +48,10 @@ steps:
           --location $_COMPOSER_REGION \
           --source dags/$$dagfile
           done
+     fi
      if [ "_ROLLBACK" != "false" ]
      then
-      for dagfile in $(ls dags)
+      for dagfile in $(ls /workspace/docdags)
           do
           gcloud composer environments storage dags import \
           --environment $_COMPOSER_ENV_NAME \
