@@ -25,17 +25,18 @@ steps:
    args:
     - -c
     - |
-      if [ "$_ROLLBACK" != "false" ]
+      if [[ "$_ROLLBACK" == "false" ]]
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
         echo $BRANCH_NAME
+      gsutil cp /dags/* gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
       fi
       
              
 # # Independant command testing purpose 
- - name: 'gcr.io/cloud-builders/gsutil'
-   args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
+#- name: 'gcr.io/cloud-builders/gsutil'
+#   args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
     
    
   
