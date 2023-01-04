@@ -29,4 +29,4 @@ ENV PYTHONUNBUFFERED True
 ENV DAGS /dags
 WORKDIR $DAGS
 COPY . ./
-CMD ["pytest", "-s", "dags/example_dag_test.py"]
+#CMD ["pytest", "-s", "dags/example_dag_test.py"]
