@@ -37,14 +37,14 @@ steps:
  - name: 'gcr.io/cloud-builders/gcloud'
    entrypoint: 'bash'
    args:
-   - '-c'
+   - -c
    - |
      if [[ "_ROLLBACK" == "false" ]]
-     then
-      echo "ROLLBACK NOT REQUIRED"
+      then
+        echo "ROLLBACK NOT REQUIRED"
      elseif [[ "_ROLLBACK" == "true" ]]
-     then
-      echo "ROLLBACK REQUIRED"
+      then
+        echo "ROLLBACK REQUIRED"
      if      
       
      #for dagfile in $(ls dags)
