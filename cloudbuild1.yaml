@@ -24,6 +24,7 @@ steps:
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
+        echo $BRANCHNAME
       fi
       
              
