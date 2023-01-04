@@ -54,7 +54,7 @@ steps:
      if [ "$_ROLLBACK" != "false" ]
      then
        echo "ROLLBACK in Progress"
-       for entry in $(ls docdags); 
+       for entry in $(ls /workspace/docdags); 
        	     do echo $entry;  gcloud composer environments storage dags import --environment $_COMPOSER_ENV_NAME --location $_COMPOSER_REGION --source $entry;
                           
              done
