@@ -42,7 +42,7 @@ steps:
      if [[ "_ROLLBACK" != "false" ]]
      then
         echo "ROLLBACK NOT REQUIRED"
-     elseif [[ "_ROLLBACK" != "true" ]]
+     if [[ "_ROLLBACK" != "true" ]]
      then
         echo "ROLLBACK REQUIRED"
      if      
