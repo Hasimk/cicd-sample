@@ -7,7 +7,10 @@ substitutions:
 steps:
 # Build the image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
+   args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.5', '.']
+# Push the image to GCR
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['push', 'gcr.io/fg-dev-host/my-image:v1.5']
 # Removing the old build Dags object
  - name: 'gcr.io/cloud-builders/gsutil'
    entrypoint: 'bash'
