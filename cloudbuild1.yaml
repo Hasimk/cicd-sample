@@ -45,7 +45,7 @@ steps:
      if [[ "_ROLLBACK" != "true" ]]
      then
         echo "ROLLBACK REQUIRED"
-     if      
+     fi
       
      #for dagfile in $(ls dags)
      #    do
