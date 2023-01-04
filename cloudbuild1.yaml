@@ -29,8 +29,9 @@ steps:
     - |
       if [ "$_ROLLBACK" != "false" ]
       then
-        cp -rv /dags/dags/*  /workspace/docdags/
-        ls /workspace/docdags
+        mkdir /docdags
+        cp -rv /dags/dags/*  /docdags/
+        ls /docdags
       fi
       
              
