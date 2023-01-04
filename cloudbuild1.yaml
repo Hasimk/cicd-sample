@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'false'
+  _ROLLBACK: 'true'
  
    
 steps:
@@ -27,7 +27,7 @@ steps:
     args:
     - -c
     - |
-      if [ "$_ROLLBACK" != "true" ]
+      if [ "$_ROLLBACK" = "true" ]
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
