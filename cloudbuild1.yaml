@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'false'
+  _ROLLBACK: 'true'
  
    
 steps:
@@ -39,7 +39,7 @@ steps:
     args:
     - -c
     - |
-     if [ "$_ROLLBACK" != "false" ]
+     if [ "$_ROLLBACK" = "false" ]
      then
        echo "ROLLBACK NOT REQUIRED"
        for dagfile in $(ls dags)
@@ -51,7 +51,7 @@ steps:
             done
      fi
      
-     if [ "$_ROLLBACK" != "true" ]
+     if [ "$_ROLLBACK" = "true" ]
      then
        for dagfile in $(ls /workspace/docdags)
        do
