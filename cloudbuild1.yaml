@@ -32,15 +32,20 @@ steps:
       fi
       
              
- - name: 'gcr.io/cloud-builders/gsutil'
-   entrypoint: /bin/bash
-   args: 
-   - -c
+ - name: 'gcr.io/cloud-builders/gcloud'
+   entrypoint: 'bash'
+   args:
+   - '-c'
    - |
      if [[ "_ROLLBACK" == "true" ]]
      then
-       cp /dags/*.py gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
+      for dagfile in $(ls dags)
+          do
+          gcloud composer environments storage dags import \
+          --environment $_COMPOSER_ENV_NAME \
+          --location $_COMPOSER_REGION \
+          --source dags/$$dagfile
+          done
      fi
-   
   
       
