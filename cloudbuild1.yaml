@@ -47,7 +47,7 @@ steps:
           --location $_COMPOSER_REGION \
           --source dags/$$dagfile
           done
-     echo "ROLLBACK REQUIRED"
+     echo "ROLLBACK REQUIRED AGFAIN"
      fi
   
       
