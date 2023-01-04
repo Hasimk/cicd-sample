@@ -39,11 +39,11 @@ steps:
    args:
    - -c
    - |
-     if [[ "_ROLLBACK" == "false" ]]
+     if [ "$_ROLLBACK" != "false" ]
      then
        echo "ROLLBACK NOT REQUIRED"
      fi
-     if [[ "_ROLLBACK" == "true" ]]
+     if [ "$_ROLLBACK" != "true" ]
      then
        echo "ROLLBACK REQUIRED"
      fi
