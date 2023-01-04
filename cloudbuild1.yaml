@@ -29,6 +29,7 @@ steps:
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
+      echo "ROLLBACK NOT REQUIRED"
       fi
       
              
@@ -46,6 +47,7 @@ steps:
           --location $_COMPOSER_REGION \
           --source dags/$$dagfile
           done
+     echo "ROLLBACK REQUIRED"
      fi
   
       
