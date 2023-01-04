@@ -5,7 +5,9 @@ substitutions:
    
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
- 
+# Build the image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.0', '.']
 # Removing the old build Dags object
  - name: 'gcr.io/cloud-builders/gsutil'
    entrypoint: 'bash'
