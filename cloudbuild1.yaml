@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'true'
+  _ROLLBACK: 'false'
   
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
@@ -34,17 +34,17 @@ steps:
 
  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.5', '.']
+    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.8', '.']
     
  # Push the image to GCR
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/fg-dev-host/my-image6:v1.5']
+    args: ['push', 'gcr.io/fg-dev-host/my-image6:v1.8']
 
 # vulnerabiliy scan
 
   - name: 'gcr.io/cloud-builders/gcloud'
 
-    args: ['beta', 'container', 'images', 'describe', 'gcr.io/fg-dev-host/my-image6:v1.5', '--format=json']
+    args: ['beta', 'container', 'images', 'describe', 'gcr.io/fg-dev-host/my-image6:v1.8', '--format=json']
 
 # Removing the old build Dags object
   - name: 'gcr.io/cloud-builders/gsutil'
