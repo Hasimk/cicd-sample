@@ -54,7 +54,7 @@ steps:
      if [ "$_ROLLBACK" != "false" ]
      then
        echo "ROLLBACK in Progress"
-       ls 
+       ls /workspace
        pwd 
        for entry in $(ls /workspace/docdags); 
        	     do 
