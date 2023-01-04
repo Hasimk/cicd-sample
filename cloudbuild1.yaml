@@ -31,7 +31,6 @@ steps:
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-      echo "ROLLBACK NOT REQUIRED"
       fi
       
              
@@ -49,7 +48,13 @@ steps:
           --location $_COMPOSER_REGION \
           --source dags/$$dagfile
           done
-      echo "PUSH ELSE CONDITION HERE"
-    fi
-  
-      
+     if [ "_ROLLBACK" != "false" ]
+     then
+      for dagfile in $(ls dags)
+          do
+          gcloud composer environments storage dags import \
+          --environment $_COMPOSER_ENV_NAME \
+          --location $_COMPOSER_REGION \
+          --source /workspace/dags/$$dagfile
+          done
+     fi
