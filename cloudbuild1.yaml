@@ -1,6 +1,6 @@
 # - Airflow Env variables.
 substitutions:
-  _ROLLBACK: 'false'
+  _ROLLBACK: 'true'
  
    
 # Access the id_github file from Secret Manager, and setup SSH
@@ -29,15 +29,18 @@ steps:
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
-        echo $BRANCH_NAME
-      gsutil cp /dags/* gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
       fi
       
              
 # # Independant command testing purpose 
-#- name: 'gcr.io/cloud-builders/gsutil'
-#   args: ['cp', '/workspace/docdags/*.py', 'gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/']
-    
+- name: 'gcr.io/cloud-builders/gsutil'
+   args: 
+    - -C
+    _ |
+      if [[ "_ROLLBACK" == "true" ]]
+      then
+        cp /dags/*.py gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
+      fi
    
   
       
