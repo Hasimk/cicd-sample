@@ -28,7 +28,7 @@ steps:
     args:
     - -c
     - |
-      if [ "$_ROLLBACK" != "true" ]
+      if [ "$_ROLLBACK" != "false" ]
       then
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
