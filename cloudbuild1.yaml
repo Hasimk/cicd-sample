@@ -53,5 +53,5 @@ steps:
      if [ "_ROLLBACK" != "false" ]
      then
       echo "ROLL BACK REQUIRED"
-      gcloud composer environments storage data import $_COMPOSER_ENV_NAME --location=$_COMPOSER_REGION --source=/workspace/docdags/
+      gcloud composer environments storage data import --environment=$_COMPOSER_ENV_NAME --location=$_COMPOSER_REGION --source=/workspace/docdags/
      fi
