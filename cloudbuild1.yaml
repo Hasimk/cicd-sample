@@ -33,6 +33,7 @@ steps:
       
              
  - name: 'gcr.io/cloud-builders/gsutil'
+   entrypoint: /bin/bash
    args: 
    - -c
    - |
