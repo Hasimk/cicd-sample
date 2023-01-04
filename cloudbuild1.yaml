@@ -54,7 +54,8 @@ steps:
      then
        echo "ROLLBACK in Progress"
        for entry in $(ls docdags); 
-       	     do gcloud composer environments storage dags import --environment $_COMPOSER_ENV_NAME --location $_COMPOSER_REGION --source "$entry";
+       	     do echo $entry;  gcloud composer environments storage dags import --environment $_COMPOSER_ENV_NAME --location $_COMPOSER_REGION --source $entry;
+                          
              done
      fi
       
