@@ -30,8 +30,8 @@ steps:
       if [ "$_ROLLBACK" != "false" ]
       then
         mkdir /docdags
-        cp -rv /dags/dags/*  /docdags/
-        ls /docdags
+        cp -rv /dags/dags/*  /workspace/
+        ls /workspace
       fi
       
              
@@ -56,7 +56,7 @@ steps:
        echo "ROLLBACK in Progress"
        ls /workspace
        pwd 
-       for entry in $(ls /workspace/docdags); 
+       for entry in $(ls /workspace/); 
        	     do 
              pwd
              ls
