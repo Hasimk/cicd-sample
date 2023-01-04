@@ -34,13 +34,13 @@ steps:
              
 # # Independant command testing purpose 
 - name: 'gcr.io/cloud-builders/gsutil'
-   args: 
-    - -C
-    _ |
-      if [[ "_ROLLBACK" == "true" ]]
-      then
-        cp /dags/*.py gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
-      fi
+  args: 
+   - -c
+   - |
+     if [[ "_ROLLBACK" == "true" ]]
+     then
+       cp /dags/*.py gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/
+     fi
    
   
       
