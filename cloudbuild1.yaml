@@ -2,17 +2,10 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'true'
- 
-   
-# Access the id_github file from Secret Manager, and setup SSH
+  _ROLLBACK: 'false'
+  
+
 steps:
-# Build the image
-#  - name: 'gcr.io/cloud-builders/docker'
-#    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image:v1.5', '.']
-# Push the image to GCR
-#  - name: 'gcr.io/cloud-builders/docker'
-#    args: ['push', 'gcr.io/fg-dev-host/my-image:v1.5']
 
 # Removing the old build Dags object
   - name: 'gcr.io/cloud-builders/gsutil'
@@ -33,8 +26,7 @@ steps:
         cp -rv /dags/dags/*  /workspace/docdags/
         ls /workspace/docdags
       fi
-      
-             
+                   
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
