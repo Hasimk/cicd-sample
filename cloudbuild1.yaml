@@ -1,7 +1,7 @@
 # - Airflow Env variables.
 substitutions:
   _COMPOSER_REGION: asia-south1
-  _COMPOSER_ENV_NAME: airflow-hasim
+  _COMPOSER_ENV_NAME: arflow-hasim
   _ROLLBACK: 'true'
  
    
@@ -49,9 +49,4 @@ steps:
       #    --location $_COMPOSER_REGION \
       #    --source dags/$$dagfile
       #    done
-     fi
-     if [ "_ROLLBACK" != "false" ]
-     then
-      echo "ROLL BACK REQUIRED"
-      gcloud composer environments storage data import --environment=$_COMPOSER_ENV_NAME --location=$_COMPOSER_REGION --source=/workspace/docdags/
-     fi
+     gcloud composer environments storage data import --environment=$_COMPOSER_ENV_NAME --location=$_COMPOSER_REGION --source=/workspace/docdags/
