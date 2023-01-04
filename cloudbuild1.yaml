@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'false'
+  _ROLLBACK: 'true'
  
    
 # Access the id_github file from Secret Manager, and setup SSH
@@ -40,7 +40,7 @@ steps:
     args:
     - -c
     - |
-     if [ "$_ROLLBACK" != "false" ]
+     if [ "$_ROLLBACK" != "true" ]
      then
        echo "ROLLBACK NOT REQUIRED"
        for dagfile in $(ls dags)
@@ -52,7 +52,7 @@ steps:
             done
      fi
      
-     if [ "$_ROLLBACK" != "true" ]
+     if [ "$_ROLLBACK" != "false" ]
      then
        for dagfile in $(ls /workspace/docdags)
        do
