@@ -85,9 +85,10 @@ steps:
      
      if [ "$_ROLLBACK" != "false" ]
      then
+       echo "ROLLBACK In  PROGRESS"
        for dagfile in $(ls /workspace/docdags)
        do
-            echo "printed file"   
+#             echo "printed file"   
             gcloud composer environments storage dags import \
             --environment $_COMPOSER_ENV_NAME \
             --location $_COMPOSER_REGION \
