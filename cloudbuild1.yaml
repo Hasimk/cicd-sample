@@ -3,6 +3,7 @@ substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
   _ROLLBACK: 'false'
+  _SEVERITY: MEDIUM
   
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
@@ -35,6 +36,29 @@ steps:
  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
+
+
+  - id: scan
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: /bin/bash
+    args:
+     - -c
+     - |
+       gcloud artifacts docker images scan 'gcr.io/fg-dt-lumiq-dev/fg-dt-lumiq-dev:v1.2' \
+       --format='value(response.scan)' > /workspace/docdags/scan_id.txt
+  - id: severity check
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: /bin/bash
+    args:
+     - -c
+     - | 
+       gcloud artifacts docker images list-vulnerabilities \
+        $(cat /workspace/docdags/scan_id.txt) --format='value(vulnerability.effectiveSeverity)' \
+        | if grep -Fxq $_SEVERITY 
+          then echo 'Failed vulnerability check'
+          exit 1 
+          fi
+
     
  # Push the image to GCR
   - name: 'gcr.io/cloud-builders/docker'
@@ -47,12 +71,12 @@ steps:
     args: ['beta', 'container', 'images', 'describe', 'gcr.io/fg-dev-host/my-image6:v1.7', '--format=json']
 
 # Removing the old build Dags object
-#   - name: 'gcr.io/cloud-builders/gsutil'
-#     entrypoint: 'bash'
-#     args:
-#       - '-c'
-#       - |
-#         gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+  - name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
   
  # No need to save in tar if it can be run like below
   - name: gcr.io/fg-dev-host/my-image6:v1.5
