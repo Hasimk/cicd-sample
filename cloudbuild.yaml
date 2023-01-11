@@ -33,7 +33,7 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: /bin/bash
     args:
     - -c
