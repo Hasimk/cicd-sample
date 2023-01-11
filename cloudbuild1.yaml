@@ -3,7 +3,8 @@ substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
   _ROLLBACK: 'false'
-  _SEVERITY: MEDIUM,HIGH
+  _SEVERITY: MEDIUM
+  _SEVERITY1: HIGH
   
 # Access the id_github file from Secret Manager, and setup SSH
 steps:
@@ -32,16 +33,16 @@ steps:
     volumes:
     - name: 'ssh'
       path: /root/.ssh
-      
-  # - name: gcr.io/cloud-builders/gcloud
-    # entrypoint: /bin/bash
-    # args:
-     # - -c
-     # - |
-       # gcloud artifacts repositories set-cleanup-policy my-image6 \
-       # --project=fg-dev-host \
-       # --location=us \
-       # --policy=policy.json \
+
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: /bin/bash
+    args:
+     - -c
+     - |
+       gcloud artifacts repositories set-cleanup-policy my-image6 \
+       --project=fg-dev-host \
+       --location=us \
+       --policy=policy.json \
 
  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
@@ -54,8 +55,9 @@ steps:
     args:
      - -c
      - |
-       gcloud artifacts docker images scan 'gcr.io/fg-dev-host/my-image6:v1.7' \
+       gcloud artifacts docker images scan 'gcr.io/fg-dt-lumiq-dev/fg-dt-lumiq-dev:v1.2' \
        --format='value(response.scan)' > /workspace/docdags/scan_id.txt
+
   - id: severity check
     name: gcr.io/cloud-builders/gcloud
     entrypoint: /bin/bash
@@ -65,7 +67,11 @@ steps:
        gcloud artifacts docker images list-vulnerabilities \
         $(cat /workspace/docdags/scan_id.txt) --format='value(vulnerability.effectiveSeverity)' \
         | if grep -Fxq $_SEVERITY 
-          then echo 'Failed vulnerability check'
+          then echo 'Failed vulnerability check - MEDIUM'
+          exit 1 
+          fi
+          if grep -Fxq $_SEVERITY1 
+          then echo 'Failed vulnerability check - HIGH'
           exit 1 
           fi
 
