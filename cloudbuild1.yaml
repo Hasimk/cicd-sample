@@ -38,6 +38,7 @@ steps:
     args:
      - -c
      - |
+       gcloud components update
        gcloud artifacts repositories set-cleanup-policy my-image6 \
        --project=fg-dev-host \
        --location=us \
