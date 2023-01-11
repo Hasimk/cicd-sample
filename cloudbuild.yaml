@@ -33,15 +33,15 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: /bin/bash
-    args:
-    - -c
-    - |
-       gcloud artifacts repositories set-cleanup-policy my-image6 \
-       --project=fg-dev-host \
-       --location=us \
-       --policy=policy.json \
+#   - name: 'gcr.io/cloud-builders/gcloud'
+#     entrypoint: /bin/bash
+#     args:
+#     - -c
+#     - |
+#        gcloud artifacts repositories set-cleanup-policy my-image6 \
+#        --project=fg-dev-host \
+#        --location=us \
+#        --policy=policy.json \
 
   
  # No need to save in tar if it can be run like below
