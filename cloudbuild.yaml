@@ -33,7 +33,7 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  - name: 'gcr.io/fg-dev-host/my-image6'
+  - name: 'gcr.io/fg-dev-host'
     entrypoint: /bin/bash
     args:
     - -c
