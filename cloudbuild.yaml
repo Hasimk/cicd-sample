@@ -33,7 +33,7 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  - name: gcr.io/fg-dev-host
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: /bin/bash
     args:
     - -c
