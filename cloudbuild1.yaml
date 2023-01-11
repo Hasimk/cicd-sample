@@ -34,15 +34,15 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-#   - name: gcr.io/cloud-builders/gcloud
-#     entrypoint: /bin/bash
-#     args:
-#      - -c
-#      - |
-#        gcloud artifacts repositories set-cleanup-policy my-image6 \
-#        --project=fg-dev-host \
-#        --location=us \
-#        --policy=policy.json \
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: /bin/bash
+    args:
+     - -c
+     - |
+       gcloud artifacts repositories set-cleanup-policy my-image6 \
+       --project=fg-dev-host \
+       --location=us \
+       --policy=policy.json \
 
  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
