@@ -71,7 +71,7 @@ steps:
           exit 1 
           fi
 
-  - id: severity check
+  - id: severity check1
     name: gcr.io/cloud-builders/gcloud
     entrypoint: /bin/bash
     args:
