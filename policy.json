@@ -3,7 +3,7 @@
     "name": "my_policy",
     "action": {"type": "Delete"},
     "condition": {
-      "versionAge": 8d
+      "versionAge": 8
     }
   }
 ]
