@@ -55,7 +55,7 @@ steps:
     args:
      - -c
      - |
-       gcloud artifacts docker images scan 'gcr.io/gcr.io/fg-dev-host/my-image6:v1.7' \
+       gcloud artifacts docker images scan 'gcr.io/fg-dev-host/my-image6:v1.7' \
        --format='value(response.scan)' > /workspace/docdags/scan_id.txt
 
   - id: severity check
