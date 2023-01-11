@@ -35,7 +35,7 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-  - name: gcr.io/cloud-builders/docker
+  - name: gcr.io/cloud-builders/gcloud
     entrypoint: /bin/bash
     args:
      - -c
