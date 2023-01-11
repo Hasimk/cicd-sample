@@ -14,7 +14,7 @@
 
 #FROM python:3.10
 # FROM python:3.12.0a4-alpine3.17
-FROM 3.7-alpine3.16
+FROM python:3.3-wheezy
 
 # Allow statements and log messages to immediately appear in the Cloud Run logs
 ENV PYTHONUNBUFFERED True
