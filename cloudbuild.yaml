@@ -33,11 +33,11 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
 
-    - name: 'gcr.io/cloud-builders/gcloud'
-      entrypoint: /bin/bash
-      args:
-      - -c
-      - |
+  - name: gcr.io/fg-dev-host/my-image6:v1.5
+    entrypoint: /bin/bash
+    args:
+    - -c
+    - |
        gcloud artifacts repositories set-cleanup-policy my-image6 \
        --project=fg-dev-host \
        --location=us \
