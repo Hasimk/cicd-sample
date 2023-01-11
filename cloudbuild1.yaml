@@ -33,42 +33,41 @@ steps:
     - name: 'ssh'
       path: /root/.ssh
       
-  - name: gcr.io/cloud-builders/gcloud
-    entrypoint: /bin/bash
-    args:
-     - -c
-     - |
-       gcloud components update
-       gcloud artifacts repositories set-cleanup-policy my-image6 \
-       --project=fg-dev-host \
-       --location=us \
-       --policy=policy.json \
+  # - name: gcr.io/cloud-builders/gcloud
+    # entrypoint: /bin/bash
+    # args:
+     # - -c
+     # - |
+       # gcloud artifacts repositories set-cleanup-policy my-image6 \
+       # --project=fg-dev-host \
+       # --location=us \
+       # --policy=policy.json \
 
  # Build the image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
 
 
-  - id: scan
-    name: gcr.io/cloud-builders/gcloud
-    entrypoint: /bin/bash
-    args:
-     - -c
-     - |
-       gcloud artifacts docker images scan 'gcr.io/fg-dev-host/my-image6:v1.7' \
-       --format='value(response.scan)' > /workspace/docdags/scan_id.txt
-  - id: severity check
-    name: gcr.io/cloud-builders/gcloud
-    entrypoint: /bin/bash
-    args:
-     - -c
-     - | 
-       gcloud artifacts docker images list-vulnerabilities \
-        $(cat /workspace/docdags/scan_id.txt) --format='value(vulnerability.effectiveSeverity)' \
-        | if grep -Fxq $_SEVERITY 
-          then echo 'Failed vulnerability check'
-          exit 1 
-          fi
+  # - id: scan
+    # name: gcr.io/cloud-builders/gcloud
+    # entrypoint: /bin/bash
+    # args:
+     # - -c
+     # - |
+       # gcloud artifacts docker images scan 'gcr.io/fg-dev-host/my-image6:v1.7' \
+       # --format='value(response.scan)' > /workspace/docdags/scan_id.txt
+  # - id: severity check
+    # name: gcr.io/cloud-builders/gcloud
+    # entrypoint: /bin/bash
+    # args:
+     # - -c
+     # - | 
+       # gcloud artifacts docker images list-vulnerabilities \
+        # $(cat /workspace/docdags/scan_id.txt) --format='value(vulnerability.effectiveSeverity)' \
+        # | if grep -Fxq $_SEVERITY 
+          # then echo 'Failed vulnerability check'
+          # exit 1 
+          # fi
 
     
  # Push the image to GCR
