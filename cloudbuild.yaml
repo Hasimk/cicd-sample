@@ -39,9 +39,9 @@ steps:
     args:
      - -c
      - |
-       gcloud container images list-tags "gcr.io/fg-dev-host/my-image" \
-       --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-10 days' +'%Y-%m-%d')" \
-       --format="get(digest)" --limit=999999 |  awk '{print "'"gcr.io/fg-dev-host/my-image@"'" $1}' | xargs -n 1 gcloud container images delete \
+       gcloud container images list-tags "gcr.io/fg-dev-host/hasimcicdfg" \
+       --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-30 days' +'%Y-%m-%d')" \
+       --format="get(digest)" --limit=999999 |  awk '{print "'"gcr.io/fg-dev-host/hasimcicdfg@"'" $1}' | xargs -n 1 gcloud container images delete \
        --force-delete-tags 
        --quiet
 
