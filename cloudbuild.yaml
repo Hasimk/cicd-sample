@@ -45,46 +45,7 @@ steps:
        
 
   
- # No need to save in tar if it can be run like below
-  - name: gcr.io/fg-dev-host/my-image6:v1.5
-    entrypoint: /bin/bash
-    args:
-    - -c
-    - |
-      if [ "$_ROLLBACK" != "false" ]
-      then
-        cp -rv /dags/dags/*  /workspace/docdags/
-        ls /workspace/docdags
-      fi
-                   
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-    - -c
-    - |
-     if [ "$_ROLLBACK" != "true" ]
-     then
-       echo "ROLLBACK NOT REQUIRED"
-       for dagfile in $(ls dags)
-             do
-            gcloud composer environments storage dags import \
-            --environment $_COMPOSER_ENV_NAME \
-            --location $_COMPOSER_REGION \
-            --source dags/$$dagfile
-            done
-     fi
-     
-     if [ "$_ROLLBACK" != "false" ]
-     then
-       echo "ROLLBACK In  PROGRESS"
-       for dagfile in $(ls /workspace/docdags)
-       do
-            gcloud composer environments storage dags import \
-            --environment $_COMPOSER_ENV_NAME \
-            --location $_COMPOSER_REGION \
-            --source /workspace/docdags/$$dagfile
-       done
-     fi
+
     
     
 availableSecrets:
