@@ -41,9 +41,7 @@ steps:
      - |
        gcloud container images list-tags "gcr.io/fg-dev-host/hasimcicdfg" \
        --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-30 days' +'%Y-%m-%d')" \
-       --format="get(digest)" --limit=999999 |  awk '{print "'"gcr.io/fg-dev-host/hasimcicdfg@"'" $1}' | xargs -n 1 gcloud container images delete \
-       --force-delete-tags 
-       --quiet
+       --format="get(digest)" --limit=999999 |  awk '{print "'"gcr.io/fg-dev-host/hasimcicdfg@"'" $1}' | xargs -n 1 gcloud container images delete --force-delete-tags --quiet
 
   
  # No need to save in tar if it can be run like below
