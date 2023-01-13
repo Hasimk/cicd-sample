@@ -43,9 +43,16 @@ steps:
        --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-1 days' +'%Y-%m-%d')" \
        --format="get(digest)" --limit=999999 |  awk '{print "'"gcr.io/fg-dev-host/my-image@"'" $1}' | xargs -n 1 gcloud container images delete --project="fg-dev-host" --force-delete-tags --quiet
        
-
-  
-
+ 
+#   - name: 'gcr.io/cloud-builders/gcloud'
+#     entrypoint: /bin/bash
+#     args:
+#     - -c
+#     - |
+#        gcloud artifacts repositories set-cleanup-policy my-image6 \
+#        --project=fg-dev-host \
+#        --location=us \
+#        --policy=policy.json \
     
     
 availableSecrets:
