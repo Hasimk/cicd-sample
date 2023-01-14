@@ -52,7 +52,69 @@ steps:
 #        --project=fg-dev-host \
 #        --location=us \
 #        --policy=policy.json \
-    
+    # Build the image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/fg-dev-host/my-image6:v1.7', '.']
+
+  
+# Push the image to GCR
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/fg-dev-host/my-image6:v1.7']
+
+# vulnerabiliy scan
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+
+    args: ['beta', 'container', 'images', 'describe', 'gcr.io/fg-dev-host/my-image6:v1.7', '--format=json']
+
+# Removing the old build Dags object
+#   - name: 'gcr.io/cloud-builders/gsutil'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         gsutil -m rm -r gs://asia-south1-arflow-hasim-79c2d444-bucket/dags/*
+  
+ # No need to save in tar if it can be run like below
+  - name: gcr.io/fg-dev-host/my-image6:v1.7
+    entrypoint: /bin/bash
+    args:
+    - -c
+    - |
+      if [ "$_ROLLBACK" != "false" ]
+      then
+        cp -rv /dags/dags/*  /workspace/docdags/
+        ls /workspace/docdags
+      fi
+                   
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+    - -c
+    - |
+     if [ "$_ROLLBACK" != "true" ]
+     then
+       echo "ROLLBACK NOT REQUIRED"
+       for dagfile in $(ls dags)
+             do
+            gcloud composer environments storage dags import \
+            --environment $_COMPOSER_ENV_NAME \
+            --location $_COMPOSER_REGION \
+            --source dags/$$dagfile
+            done
+     fi
+     
+     if [ "$_ROLLBACK" != "false" ]
+     then
+       echo "ROLLBACK In  PROGRESS"
+       for dagfile in $(ls /workspace/docdags)
+       do
+            gcloud composer environments storage dags import \
+            --environment $_COMPOSER_ENV_NAME \
+            --location $_COMPOSER_REGION \
+            --source /workspace/docdags/$$dagfile
+       done
+     fi
     
 availableSecrets:
     secretManager:
