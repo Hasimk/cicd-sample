@@ -4,6 +4,9 @@ substitutions:
   _COMPOSER_ENV_NAME: arflow-hasim
   _ROLLBACK: 'false'
   
+  #   _SEVERITY: MEDIUM
+#   _SEVERITY1: HIGH
+#   _SEVERITY2: CRITICAL
 
   
 # Access the id_github file from Secret Manager, and setup SSH
