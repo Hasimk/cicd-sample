@@ -124,7 +124,7 @@ steps:
     - |
       if [ "$_ROLLBACK" != "false" ]
       then
-        cp -rv /dags/dags/*  /workspace/docdags/
+        cp -rv /dags/*  /workspace/docdags/
         ls /workspace/docdags
       fi
                    
