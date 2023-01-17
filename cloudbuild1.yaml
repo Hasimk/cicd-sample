@@ -2,7 +2,7 @@
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
-  _ROLLBACK: 'true'
+  _ROLLBACK: 'false'
   
   #   _SEVERITY: MEDIUM
 #   _SEVERITY1: HIGH
