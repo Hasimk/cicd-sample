@@ -1,4 +1,4 @@
-### ##  Hasim Hasim Airflow Env variables.
+### ##  Hasim Dev Airflow Env variables.
 substitutions:
   _COMPOSER_REGION: asia-south1
   _COMPOSER_ENV_NAME: arflow-hasim
