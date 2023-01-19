@@ -1,7 +1,7 @@
 ### ##  Hasim Hasim Airflow Env variables.
 substitutions:
-  _COMPOSER_REGION: asia-south1
-  _COMPOSER_ENV_NAME: arflow-hasim
+  _COMPOSER_REGION: asia-south1---main
+  _COMPOSER_ENV_NAME: arflow-hasim---main
   _ROLLBACK: 'false'
   
 #   _SEVERITY: MEDIUM
