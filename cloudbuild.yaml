@@ -33,7 +33,7 @@ steps:
     volumes:
     - name: 'ssh'
       path: /root/.ssh
-
+#delete images older then 20 days
   - name: 'gcr.io/cloud-builders/gcloud'
     id: Clean up older versions
     entrypoint: 'bash'
@@ -41,7 +41,7 @@ steps:
      - -c
      - |
        gcloud container images list-tags gcr.io/fg-dev-host/my-image6 \
-       --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-23 day' +'%Y-%m-%d')" \
+       --filter="timestamp.date('%Y-%m-%d', Z)<$(date --date='-20 day' +'%Y-%m-%d')" \
        --format='get(digest)' --limit=unlimited | awk '{print "gcr.io/fg-dev-host/my-image6@" $1}' | xargs gcloud container images delete --force-delete-tags --quiet || true
  
 #   - name: 'gcr.io/cloud-builders/gcloud'
